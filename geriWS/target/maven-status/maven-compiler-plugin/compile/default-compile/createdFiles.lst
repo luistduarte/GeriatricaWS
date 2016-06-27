@@ -1,0 +1,8 @@
+Models/Utente.class
+pt/ua/ieeta/geriws/ApplicationConfig.class
+Utils/Database.class
+Rest/Operations/Utentes/Utente_Operacoes.class
+Models/Medico.class
+Models/UtentesList.class
+Utils/Status.class
+Rest/Operations/Medicos/Medico_Operacoes.class
