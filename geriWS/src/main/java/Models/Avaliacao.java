@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Models;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -12,52 +8,68 @@ import java.util.Date;
  * @author luis
  */
 public class Avaliacao {
-    private int id_avaliacao;
     private String descricao;
     private int resumo;
-    private Date data;
+    private Timestamp time;
+    private int tipo_avaliacao;
+    private int nume_utente;
+    private int cc_medi;
 
-    public Avaliacao(int id_avaliacao, String descricao, int resumo, Date data) {
-        this.id_avaliacao = id_avaliacao;
+    public Avaliacao(String descricao, int resumo, Timestamp time, int tipo_avaliacao, int nume_utente, int cc_medi) {
         this.descricao = descricao;
         this.resumo = resumo;
-        this.data = data;
+        this.time = time;
+        this.tipo_avaliacao = tipo_avaliacao;
+        this.nume_utente = nume_utente;
+        this.cc_medi = cc_medi;
     }
 
-    public int getid_avaliacao() {
-        return id_avaliacao;
-    }
-
-    public void setid_avaliacao(int id_avaliacao) {
-        this.id_avaliacao = id_avaliacao;
-    }
-
-    public String getdescricao() {
+    public String getDescricao() {
         return descricao;
     }
 
-    public void setdescricao(String descricao) {
+    public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 
-    public int getresumo() {
+    public int getResumo() {
         return resumo;
     }
 
-    public void setresumo(int resumo) {
+    public void setResumo(int resumo) {
         this.resumo = resumo;
     }
 
-    public Date getdata() {
-        return data;
+    public Timestamp getTime() {
+        return time;
     }
 
-    public void setdata(Date data) {
-        this.data = data;
+    public void setTime(Timestamp time) {
+        this.time = time;
     }
 
-    
+    public int getTipo_avaliacao() {
+        return tipo_avaliacao;
+    }
 
-    
-   
+    public void setTipo_avaliacao(int tipo_avaliacao) {
+        this.tipo_avaliacao = tipo_avaliacao;
+    }
+
+    public int getNume_utente() {
+        return nume_utente;
+    }
+
+    public void setNume_utente(int nume_utente) {
+        this.nume_utente = nume_utente;
+    }
+
+    public int getCc_medi() {
+        return cc_medi;
+    }
+
+    public void setCc_medi(int cc_medi) {
+        this.cc_medi = cc_medi;
+    }
+
 }

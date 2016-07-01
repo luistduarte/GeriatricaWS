@@ -146,6 +146,22 @@ public class Database {
         }        
         return rs;
     }
+    public int executeUpdate(String query ,String param1, String param2, String param3, String param4, String param5, String param6) {
+        int rs = 0;
+        try {
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, param1);
+            stmt.setString(2, param2);
+            stmt.setString(3, param3);
+            stmt.setString(4, param4);
+            stmt.setString(5, param5);
+            stmt.setString(6, param6);
+            rs = stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        return rs;
+    }
     
     public Connection getConnection(){
         return conn;
@@ -158,6 +174,5 @@ public class Database {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 
 }

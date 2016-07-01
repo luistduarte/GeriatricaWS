@@ -39,17 +39,24 @@ public class Medico_Operacoes {
     @Produces(MediaType.APPLICATION_JSON)
     public String getJson() throws ParseException {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dateInString = "1991-11-02";
-        //Date todayWithZeroTime = formatter.parse(formatter.format(today));
-        Date date = dateFormat.parse(dateInString);
-
-        Medico newMedi = new Medico(14006392, "luis","luis", 1, date);
-        Gson gson = new Gson();
-
-        return gson.toJson(newMedi);
+        return "MEDICOS OPERATIONS RUNNING";
     }
 
+    /*
+        http://localhost:8080/geriWS/webServices/medicos/insert
+        SEND:
+        {
+            "CC": 14006393,
+            "nome": "luis",
+            "pass": "luis12",
+            "tipo_espe": 1,
+            "data_nasc": "1995-08-01"
+        }
+        ON SUCCESS:
+        {
+            "status": 200
+        }
+    */
     @Path("/insert")
     @POST
     @Consumes("application/json")
@@ -105,5 +112,51 @@ public class Medico_Operacoes {
         db.close();
         return gson.toJson(new Status(200));
     }
+    
+    /*
+        http://localhost:8080/geriWS/webServices/medicos/login
+        SEND: 
+        {
+            "nome": "luis",
+            "pass": "luis12"
+        }
+        ON SUCCESS:
+        {
+            "status": 200
+        }
+    */
+    @Path("/login")
+    @POST
+    @Consumes("application/json")
+    @Produces("application/json")
+    public String logMedico(String content) {
 
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        Medico newMed;
+        try {
+            newMed = gson.fromJson(content, Medico.class);
+        } catch(JsonSyntaxException ex)  {
+            Response.ResponseBuilder builder = Response.status(Response.Status.NOT_ACCEPTABLE);
+                builder.header("Access-Control-Allow-Origin", "*");
+                Response response = builder.build();
+                throw new WebApplicationException(response);
+        }
+        Database db = new Database();
+        String checkCredentials = "SELECT * FROM MEDI WHERE NOME = ? AND PASS = ?";
+        ResultSet rsCredentials = db.executeQuery(checkCredentials, "" + newMed.getNome(), newMed.getPass());
+        try {
+            if (rsCredentials.next()) {
+                db.close();
+            } else {
+                db.close();
+                Response.ResponseBuilder builder = Response.status(Response.Status.UNAUTHORIZED);
+                builder.header("Access-Control-Allow-Origin", "*");
+                Response response = builder.build();
+                throw new WebApplicationException(response);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Medico_Operacoes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return gson.toJson(new Status(200));
+    }
 }

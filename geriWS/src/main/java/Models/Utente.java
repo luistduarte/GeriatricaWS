@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Models;
 
 import java.util.Date;
@@ -28,12 +23,11 @@ public class Utente {
         this.nome = nome;
     }
 
-    public Utente(int nume_uten, String nome, Date data_nasc, int AVAL_AVDB, int AVAL_AIVD, 
+    public Utente(int nume_uten, String nome, Date data_nasc, int AVAL_AVDB, int AVAL_AIVD,
             int AVAL_MARC, int AVAL_AFEC, int AVAL_COGN, int AVAL_NUTR) {
         this.nume_uten = nume_uten;
         this.nome = nome;
         this.data_nasc = data_nasc;
-
         this.AVAL_AVDB = AVAL_AVDB;
         this.AVAL_AIVD = AVAL_AIVD;
         this.AVAL_MARC = AVAL_MARC;
@@ -113,5 +107,5 @@ public class Utente {
     public void setAVAL_NUTR(int AVAL_NUTR) {
         this.AVAL_NUTR = AVAL_NUTR;
     }
-
+    
 }
