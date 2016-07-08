@@ -1,4 +1,5 @@
 Models/Utente.class
+Models/Especialidade.class
 pt/ua/ieeta/geriws/ApplicationConfig.class
 Utils/Database.class
 Rest/Operations/Utentes/Utente_Operacoes.class
@@ -6,5 +7,6 @@ Models/Avaliacao.class
 Models/Medico.class
 Models/UtentesList.class
 Models/AvalList.class
+Models/EspecialidadeList.class
 Utils/Status.class
 Rest/Operations/Medicos/Medico_Operacoes.class

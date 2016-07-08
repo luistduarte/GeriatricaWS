@@ -45,7 +45,7 @@ public class Utente_Operacoes {
 
         return "UTENTES OPERATIONS RUNNING";
     }
-    
+
     /*
         http://localhost:8080/geriWS/webServices/utentes/12345/insert
         SEND:
@@ -58,7 +58,7 @@ public class Utente_Operacoes {
         {
             "status": 200
         }
-    */
+     */
     @Path("{medico}/insert")
     @POST
     @Consumes("application/json")
@@ -68,7 +68,7 @@ public class Utente_Operacoes {
         SimpleDateFormat sdfTime = new SimpleDateFormat("yyyy-MM-dd");
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         Utente newUtente;
-        
+
         try {
             newUtente = gson.fromJson(content, Utente.class);
         } catch (JsonSyntaxException ex) {
@@ -137,7 +137,7 @@ public class Utente_Operacoes {
                 "AVAL_NUTR": 0
             }   
         }
-    */
+     */
     @Path("{medico}/list")
     @GET
     @Produces("application/json")
@@ -186,7 +186,7 @@ public class Utente_Operacoes {
             "AVAL_COGN": 5
             "AVAL_NUTR": 6
         }
-    */
+     */
     @Path("{medico}/{utente}")
     @GET
     @Produces("application/json")
@@ -232,7 +232,7 @@ public class Utente_Operacoes {
                 "cc_medi": 12345
             }
         }
-    */
+     */
     @Path("{medico}/{utente}/{tipo_aval}")
     @GET
     @Produces("application/json")
@@ -273,7 +273,6 @@ public class Utente_Operacoes {
         return gson.toJson(listaAval, AvalList.class);
     }
 
-    
     /*
         http://localhost:8080/geriWS/webServices/utentes/12345/12345/1/newAval
         SEND:
@@ -285,7 +284,7 @@ public class Utente_Operacoes {
         {
             "status": 200
         }
-    */
+     */
     @Path("{medico}/{utente}/{tipo_aval}/newAval")
     @POST
     @Produces("application/json")
@@ -317,11 +316,42 @@ public class Utente_Operacoes {
                     Date date = new Date();
                     long time = date.getTime();
                     Timestamp now = new Timestamp(time);
-                  
 
                     String newAval = "INSERT INTO AVAL (NUME_UTEN, CC_MEDI, DESC_AVAL, AVAL_RESU, DATA_AVAL, TIPO_AVAL) VALUES (?,?,?,?,?,?)";
                     db.executeUpdate(newAval, "" + utente, "" + CC_Medi, aval.getDescricao(), "" + aval.getResumo(),
                             now.toString(), "" + tipo_aval);
+
+                    //update resumo on UTENT Table
+                    String updateResumo;                
+                    switch (tipo_aval) {
+                        case 1:
+                            updateResumo = "UPDATE UTEN SET AVAL_AVDB = ? WHERE NUME_UTEN = ?;";
+                            db.executeUpdate(updateResumo, "" + aval.getResumo(), "" + utente);
+                            break;
+                        case 2:
+                            updateResumo = "UPDATE UTEN SET AVAL_AIVD = ? WHERE NUME_UTEN = ?;";
+                            db.executeUpdate(updateResumo, "" + aval.getResumo(), "" + utente);
+                            break;
+                        case 3:
+                            updateResumo = "UPDATE UTEN SET AVAL_MARC = ? WHERE NUME_UTEN = ?;";
+                            db.executeUpdate(updateResumo, "" + aval.getResumo(), "" + utente);
+                            break;
+                        case 4:
+                            updateResumo = "UPDATE UTEN SET AVAL_AFEC = ? WHERE NUME_UTEN = ?;";
+                            db.executeUpdate(updateResumo, "" + aval.getResumo(), "" + utente);
+                            break;
+                        case 5:
+                            updateResumo = "UPDATE UTEN SET AVAL_COGN = ? WHERE NUME_UTEN = ?;";
+                            db.executeUpdate(updateResumo, "" + aval.getResumo(), "" + utente);
+                            break;
+                        case 6:
+                            updateResumo = "UPDATE UTEN SET AVAL_NUTR = ? WHERE NUME_UTEN = ?;";
+                            db.executeUpdate(updateResumo, "" + aval.getResumo(), "" + utente);
+                            break;
+                        default:
+                            break;
+
+                    }
                 } else {
                     db.close();
                     Response.ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
@@ -339,7 +369,7 @@ public class Utente_Operacoes {
             }
         } catch (SQLException ex) {
             Logger.getLogger(Utente_Operacoes.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
 
         db.close();
         return gson.toJson(new Status(200));
